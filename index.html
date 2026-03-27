@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Suburban Kart Racing</title>
+  <title>Kart Racing</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       overflow: hidden; 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #1a1a2e;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #0a0a0a;
     }
     #game-container { width: 100vw; height: 100vh; }
     
@@ -23,15 +23,15 @@
     }
     
     #position {
-      font-size: 64px;
+      font-size: 72px;
       font-weight: 900;
-      text-shadow: 4px 4px 0 #e85d04, 6px 6px 0 #000;
+      text-shadow: 4px 4px 0 #ff4444, 6px 6px 0 #000;
       line-height: 1;
     }
-    #position span { font-size: 24px; }
+    #position span { font-size: 28px; }
     
     #lap {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 700;
       margin-top: 10px;
       text-shadow: 2px 2px 0 #000;
@@ -48,133 +48,102 @@
     }
     
     #speed-value {
-      font-size: 48px;
+      font-size: 56px;
       font-weight: 900;
-      text-shadow: 3px 3px 0 #0077b6;
+      text-shadow: 3px 3px 0 #0066cc;
     }
-    #speed-value span { font-size: 20px; }
-    
-    #speed-bar {
-      width: 200px;
-      height: 12px;
-      background: rgba(0,0,0,0.5);
-      border-radius: 6px;
-      overflow: hidden;
-      margin-top: 5px;
-    }
-    #speed-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #00b4d8, #90e0ef);
-      border-radius: 6px;
-      transition: width 0.1s;
-    }
-    
-    #minimap {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 150px;
-      height: 150px;
-      background: rgba(0,0,0,0.6);
-      border-radius: 10px;
-      border: 3px solid #48cae4;
-      z-index: 100;
-      pointer-events: none;
-    }
-    #minimap canvas {
-      width: 100%;
-      height: 100%;
-      border-radius: 7px;
-    }
+    #speed-value span { font-size: 22px; }
     
     #start-screen, #end-screen {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: linear-gradient(135deg, #023e8a 0%, #0077b6 50%, #00b4d8 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 200;
-      transition: opacity 0.5s;
     }
     
     #end-screen { display: none; }
     
-    #start-screen h1, #end-screen h1 {
-      font-size: 72px;
+    h1 {
+      font-size: 80px;
       font-weight: 900;
       color: #fff;
-      text-shadow: 4px 4px 0 #e85d04;
+      text-shadow: 4px 4px 0 #ff4444;
       margin-bottom: 20px;
     }
     
-    #start-screen p, #end-screen p {
-      font-size: 20px;
-      color: #caf0f8;
+    p {
+      font-size: 22px;
+      color: #aaa;
       margin-bottom: 40px;
     }
     
     .btn {
-      padding: 20px 60px;
-      font-size: 24px;
+      padding: 20px 70px;
+      font-size: 26px;
       font-weight: 700;
-      background: linear-gradient(180deg, #ff9500, #e85d04);
+      background: linear-gradient(180deg, #ff6644, #ff4444);
       color: #fff;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      text-shadow: 1px 1px 0 #000;
-      box-shadow: 0 6px 0 #9d4c0c, 0 10px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 6px 0 #cc2222, 0 10px 20px rgba(0,0,0,0.4);
       transition: all 0.1s;
     }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 0 #9d4c0c, 0 14px 25px rgba(0,0,0,0.3);
-    }
-    .btn:active {
-      transform: translateY(4px);
-      box-shadow: 0 2px 0 #9d4c0c, 0 6px 15px rgba(0,0,0,0.3);
-    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #cc2222; }
     
     #controls-info {
       margin-top: 40px;
-      color: #caf0f8;
+      color: #888;
       text-align: center;
-    }
-    #controls-info div {
-      margin: 8px 0;
       font-size: 16px;
     }
     .key {
       display: inline-block;
-      background: rgba(255,255,255,0.2);
-      padding: 5px 12px;
-      border-radius: 5px;
+      background: #333;
+      padding: 6px 14px;
+      border-radius: 6px;
       margin: 0 3px;
       font-weight: 700;
+      color: #fff;
     }
     
     #countdown {
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 150px;
+      font-size: 180px;
       font-weight: 900;
       color: #fff;
-      text-shadow: 6px 6px 0 #e85d04;
+      text-shadow: 6px 6px 0 #ff4444;
       z-index: 150;
       display: none;
       pointer-events: none;
     }
     
     #results {
-      font-size: 36px;
-      color: #caf0f8;
+      font-size: 42px;
+      color: #aaa;
       margin-bottom: 30px;
     }
+    
+    #minimap {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 160px;
+      height: 160px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 10px;
+      border: 3px solid #444;
+      z-index: 100;
+    }
+    #minimap canvas { width: 100%; height: 100%; border-radius: 7px; }
   </style>
 </head>
 <body>
@@ -187,7 +156,6 @@
   
   <div id="speedometer">
     <div id="speed-value">0<span> km/h</span></div>
-    <div id="speed-bar"><div id="speed-fill"></div></div>
   </div>
   
   <div id="minimap"><canvas id="minimap-canvas"></canvas></div>
@@ -195,19 +163,17 @@
   <div id="countdown">3</div>
   
   <div id="start-screen">
-    <h1>Suburban Kart</h1>
-    <p>Race through the neighborhood against 7 rivals!</p>
-    <button class="btn" id="start-btn">START RACE</button>
+    <h1>KART RACE</h1>
+    <p>Race against 7 opponents!</p>
+    <button class="btn" id="start-btn">START</button>
     <div id="controls-info">
-      <div><span class="key">W</span> or <span class="key">UP</span> Accelerate</div>
-      <div><span class="key">S</span> or <span class="key">DOWN</span> Brake</div>
-      <div><span class="key">A</span><span class="key">D</span> or <span class="key">LEFT</span><span class="key">RIGHT</span> Steer</div>
-      <div><span class="key">SPACE</span> Drift</div>
+      <div><span class="key">W</span> Accelerate &nbsp; <span class="key">S</span> Brake</div>
+      <div><span class="key">A</span> <span class="key">D</span> Steer &nbsp; <span class="key">SPACE</span> Drift</div>
     </div>
   </div>
   
   <div id="end-screen">
-    <h1 id="end-title">Race Complete!</h1>
+    <h1 id="end-title">FINISH!</h1>
     <div id="results"></div>
     <button class="btn" id="restart-btn">RACE AGAIN</button>
   </div>
@@ -227,701 +193,435 @@
     // Game state
     const state = {
       started: false,
-      countdown: false,
       finished: false,
-      playerSpeed: 0,
-      playerAngle: 0,
-      playerLap: 1,
-      playerCheckpoint: 0,
-      maxSpeed: 1.2,
-      acceleration: 0.025,
-      friction: 0.015,
-      turnSpeed: 0.04,
-      driftMultiplier: 1.3,
-      isDrifting: false
+      speed: 0,
+      lap: 1,
+      checkpoint: 0,
+      maxSpeed: 0.8,
+      accel: 0.02,
+      friction: 0.008,
+      turnSpeed: 0.045,
+      drifting: false
     };
     
-    // Input
     const keys = { w: false, s: false, a: false, d: false, space: false };
     
-    // Scene setup
+    // Scene
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x87ceeb);
-    scene.fog = new THREE.Fog(0x87ceeb, 100, 400);
+    scene.background = new THREE.Color(0x2288aa);
+    scene.fog = new THREE.Fog(0x2288aa, 150, 500);
     
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
     
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.getElementById('game-container').appendChild(renderer.domElement);
     
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-    scene.add(ambientLight);
+    // Lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const sun = new THREE.DirectionalLight(0xffffff, 1);
+    sun.position.set(50, 100, 50);
+    sun.castShadow = true;
+    sun.shadow.mapSize.set(2048, 2048);
+    sun.shadow.camera.left = -200;
+    sun.shadow.camera.right = 200;
+    sun.shadow.camera.top = 200;
+    sun.shadow.camera.bottom = -200;
+    scene.add(sun);
     
-    const sunLight = new THREE.DirectionalLight(0xfff5e6, 1.2);
-    sunLight.position.set(100, 150, 50);
-    sunLight.castShadow = true;
-    sunLight.shadow.mapSize.width = 2048;
-    sunLight.shadow.mapSize.height = 2048;
-    sunLight.shadow.camera.near = 10;
-    sunLight.shadow.camera.far = 400;
-    sunLight.shadow.camera.left = -150;
-    sunLight.shadow.camera.right = 150;
-    sunLight.shadow.camera.top = 150;
-    sunLight.shadow.camera.bottom = -150;
-    scene.add(sunLight);
+    // Track - oval shape with corners
+    const trackPoints = [];
+    const numPoints = 40;
     
-    // Track waypoints (defines the track path)
-    const trackWaypoints = [];
-    const trackRadius = 120;
-    const trackSegments = 24;
-    
-    for (let i = 0; i < trackSegments; i++) {
-      const angle = (i / trackSegments) * Math.PI * 2;
-      const wobble = Math.sin(angle * 3) * 20 + Math.cos(angle * 2) * 15;
-      const r = trackRadius + wobble;
-      trackWaypoints.push(new THREE.Vector3(
-        Math.cos(angle) * r,
-        0,
-        Math.sin(angle) * r
-      ));
+    for (let i = 0; i < numPoints; i++) {
+      const t = (i / numPoints) * Math.PI * 2;
+      const rx = 140;
+      const ry = 90;
+      
+      // Make it more rectangular-ish
+      const x = Math.sign(Math.cos(t)) * rx * Math.pow(Math.abs(Math.cos(t)), 0.6);
+      const y = Math.sign(Math.sin(t)) * ry * Math.pow(Math.abs(Math.sin(t)), 0.6);
+      
+      trackPoints.push(new THREE.Vector3(x, 0, y));
     }
     
     // Ground
-    const groundGeo = new THREE.PlaneGeometry(500, 500);
-    const groundMat = new THREE.MeshLambertMaterial({ color: 0x4a7c59 });
+    const groundGeo = new THREE.PlaneGeometry(600, 600);
+    const groundMat = new THREE.MeshLambertMaterial({ color: 0x2d5a27 });
     const ground = new THREE.Mesh(groundGeo, groundMat);
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
     scene.add(ground);
     
-    // Create track road
-    function createTrack() {
-      const trackGroup = new THREE.Group();
+    // Track surface
+    const trackWidth = 24;
+    
+    function createTrackSurface() {
+      const roadMat = new THREE.MeshLambertMaterial({ color: 0x333333 });
+      const lineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const edgeMat = new THREE.MeshLambertMaterial({ color: 0xcc0000 });
+      const edgeMat2 = new THREE.MeshLambertMaterial({ color: 0xffffff });
       
-      // Road surface
-      const roadShape = new THREE.Shape();
-      const roadWidth = 18;
-      
-      for (let i = 0; i <= trackSegments; i++) {
-        const wp = trackWaypoints[i % trackSegments];
-        const next = trackWaypoints[(i + 1) % trackSegments];
-        const dir = new THREE.Vector3().subVectors(next, wp).normalize();
-        const perp = new THREE.Vector3(-dir.z, 0, dir.x);
+      for (let i = 0; i < trackPoints.length; i++) {
+        const p1 = trackPoints[i];
+        const p2 = trackPoints[(i + 1) % trackPoints.length];
         
-        if (i === 0) {
-          roadShape.moveTo(wp.x + perp.x * roadWidth/2, wp.z + perp.z * roadWidth/2);
-        }
-        roadShape.lineTo(wp.x + perp.x * roadWidth/2, wp.z + perp.z * roadWidth/2);
-      }
-      
-      // Simple road segments
-      const roadMat = new THREE.MeshLambertMaterial({ color: 0x3d3d3d });
-      const roadLineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-      
-      for (let i = 0; i < trackSegments; i++) {
-        const wp = trackWaypoints[i];
-        const next = trackWaypoints[(i + 1) % trackSegments];
-        const dir = new THREE.Vector3().subVectors(next, wp).normalize();
-        const perp = new THREE.Vector3(-dir.z, 0, dir.x);
+        const dir = new THREE.Vector3().subVectors(p2, p1);
+        const len = dir.length();
+        dir.normalize();
         
-        // Road segment
-        const segLen = wp.distanceTo(next);
-        const roadGeo = new THREE.PlaneGeometry(roadWidth, segLen);
+        const perp = new THREE.Vector3(-dir.z, 0, dir.x);
+        const center = new THREE.Vector3().addVectors(p1, p2).multiplyScalar(0.5);
+        
+        // Road
+        const roadGeo = new THREE.PlaneGeometry(trackWidth, len + 0.5);
         const road = new THREE.Mesh(roadGeo, roadMat);
         road.rotation.x = -Math.PI / 2;
         road.rotation.z = Math.atan2(dir.x, dir.z);
-        road.position.set(
-          (wp.x + next.x) / 2,
-          0.02,
-          (wp.z + next.z) / 2
-        );
+        road.position.set(center.x, 0.05, center.z);
         road.receiveShadow = true;
-        trackGroup.add(road);
+        scene.add(road);
         
-        // Center line
-        if (i % 2 === 0) {
-          const lineGeo = new THREE.PlaneGeometry(0.5, segLen * 0.6);
-          const line = new THREE.Mesh(lineGeo, roadLineMat);
-          line.rotation.x = -Math.PI / 2;
-          line.rotation.z = Math.atan2(dir.x, dir.z);
-          line.position.set(
-            (wp.x + next.x) / 2,
-            0.03,
-            (wp.z + next.z) / 2
-          );
-          trackGroup.add(line);
+        // Center dashes
+        if (i % 3 === 0) {
+          const dashGeo = new THREE.PlaneGeometry(0.6, len * 0.4);
+          const dash = new THREE.Mesh(dashGeo, lineMat);
+          dash.rotation.x = -Math.PI / 2;
+          dash.rotation.z = Math.atan2(dir.x, dir.z);
+          dash.position.set(center.x, 0.06, center.z);
+          scene.add(dash);
         }
         
-        // Road edges
-        const edgeMat = new THREE.MeshLambertMaterial({ color: 0xcccccc });
-        const edgeGeo = new THREE.BoxGeometry(0.8, 0.3, segLen);
+        // Track edges (barriers)
+        const edgeGeo = new THREE.BoxGeometry(1.2, 1, len + 0.5);
         
-        const leftEdge = new THREE.Mesh(edgeGeo, edgeMat);
+        const leftEdge = new THREE.Mesh(edgeGeo, i % 2 === 0 ? edgeMat : edgeMat2);
         leftEdge.position.set(
-          (wp.x + next.x) / 2 + perp.x * roadWidth/2,
-          0.15,
-          (wp.z + next.z) / 2 + perp.z * roadWidth/2
+          center.x + perp.x * (trackWidth / 2 + 0.6),
+          0.5,
+          center.z + perp.z * (trackWidth / 2 + 0.6)
         );
         leftEdge.rotation.y = Math.atan2(dir.x, dir.z);
         leftEdge.castShadow = true;
-        trackGroup.add(leftEdge);
+        scene.add(leftEdge);
         
-        const rightEdge = new THREE.Mesh(edgeGeo, edgeMat);
+        const rightEdge = new THREE.Mesh(edgeGeo, i % 2 === 0 ? edgeMat2 : edgeMat);
         rightEdge.position.set(
-          (wp.x + next.x) / 2 - perp.x * roadWidth/2,
-          0.15,
-          (wp.z + next.z) / 2 - perp.z * roadWidth/2
+          center.x - perp.x * (trackWidth / 2 + 0.6),
+          0.5,
+          center.z - perp.z * (trackWidth / 2 + 0.6)
         );
         rightEdge.rotation.y = Math.atan2(dir.x, dir.z);
         rightEdge.castShadow = true;
-        trackGroup.add(rightEdge);
-      }
-      
-      scene.add(trackGroup);
-    }
-    
-    // Create houses
-    function createHouses() {
-      const houseColors = [0xe8d5b7, 0xd4a373, 0xfaedcd, 0xf4d35e, 0xe9c46a];
-      
-      for (let i = 0; i < 30; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const dist = 160 + Math.random() * 80;
-        const x = Math.cos(angle) * dist;
-        const z = Math.sin(angle) * dist;
-        
-        const houseGroup = new THREE.Group();
-        
-        const width = 8 + Math.random() * 8;
-        const height = 6 + Math.random() * 6;
-        const depth = 8 + Math.random() * 8;
-        
-        // Main body
-        const bodyGeo = new THREE.BoxGeometry(width, height, depth);
-        const bodyMat = new THREE.MeshLambertMaterial({ 
-          color: houseColors[Math.floor(Math.random() * houseColors.length)] 
-        });
-        const body = new THREE.Mesh(bodyGeo, bodyMat);
-        body.position.y = height / 2;
-        body.castShadow = true;
-        body.receiveShadow = true;
-        houseGroup.add(body);
-        
-        // Roof
-        const roofGeo = new THREE.ConeGeometry(Math.max(width, depth) * 0.8, 4, 4);
-        const roofMat = new THREE.MeshLambertMaterial({ color: 0x8b4513 });
-        const roof = new THREE.Mesh(roofGeo, roofMat);
-        roof.position.y = height + 2;
-        roof.rotation.y = Math.PI / 4;
-        roof.castShadow = true;
-        houseGroup.add(roof);
-        
-        // Door
-        const doorGeo = new THREE.BoxGeometry(1.5, 3, 0.2);
-        const doorMat = new THREE.MeshLambertMaterial({ color: 0x5c4033 });
-        const door = new THREE.Mesh(doorGeo, doorMat);
-        door.position.set(0, 1.5, depth/2 + 0.1);
-        houseGroup.add(door);
-        
-        // Windows
-        const windowMat = new THREE.MeshBasicMaterial({ color: 0x87ceeb });
-        for (let w = 0; w < 2; w++) {
-          const winGeo = new THREE.BoxGeometry(1.5, 1.5, 0.2);
-          const win = new THREE.Mesh(winGeo, windowMat);
-          win.position.set(-width/4 + w * width/2, height * 0.6, depth/2 + 0.1);
-          houseGroup.add(win);
-        }
-        
-        houseGroup.position.set(x, 0, z);
-        houseGroup.rotation.y = Math.random() * Math.PI * 2;
-        scene.add(houseGroup);
+        scene.add(rightEdge);
       }
     }
     
-    // Create trees
-    function createTrees() {
-      for (let i = 0; i < 80; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const dist = 50 + Math.random() * 200;
-        const x = Math.cos(angle) * dist;
-        const z = Math.sin(angle) * dist;
-        
-        // Check if too close to track
-        let tooClose = false;
-        for (const wp of trackWaypoints) {
-          if (new THREE.Vector3(x, 0, z).distanceTo(wp) < 20) {
-            tooClose = true;
-            break;
-          }
-        }
-        if (tooClose) continue;
-        
-        const treeGroup = new THREE.Group();
-        
-        // Trunk
-        const trunkGeo = new THREE.CylinderGeometry(0.3, 0.5, 3, 8);
-        const trunkMat = new THREE.MeshLambertMaterial({ color: 0x8b4513 });
-        const trunk = new THREE.Mesh(trunkGeo, trunkMat);
-        trunk.position.y = 1.5;
-        trunk.castShadow = true;
-        treeGroup.add(trunk);
-        
-        // Foliage
-        const foliageGeo = new THREE.ConeGeometry(2.5, 5, 8);
-        const foliageMat = new THREE.MeshLambertMaterial({ color: 0x228b22 });
-        const foliage = new THREE.Mesh(foliageGeo, foliageMat);
-        foliage.position.y = 5;
-        foliage.castShadow = true;
-        treeGroup.add(foliage);
-        
-        treeGroup.position.set(x, 0, z);
-        treeGroup.scale.setScalar(0.8 + Math.random() * 0.6);
-        scene.add(treeGroup);
-      }
-    }
+    createTrackSurface();
     
-    // Create kart
-    function createKart(color, isPlayer = false) {
-      const kartGroup = new THREE.Group();
-      
-      // Body
-      const bodyGeo = new THREE.BoxGeometry(2, 0.6, 3);
-      const bodyMat = new THREE.MeshLambertMaterial({ color });
-      const body = new THREE.Mesh(bodyGeo, bodyMat);
-      body.position.y = 0.5;
-      body.castShadow = true;
-      kartGroup.add(body);
-      
-      // Cockpit
-      const cockpitGeo = new THREE.BoxGeometry(1.4, 0.5, 1.2);
-      const cockpitMat = new THREE.MeshLambertMaterial({ color: 0x333333 });
-      const cockpit = new THREE.Mesh(cockpitGeo, cockpitMat);
-      cockpit.position.set(0, 0.85, -0.3);
-      cockpit.castShadow = true;
-      kartGroup.add(cockpit);
-      
-      // Character (simple head)
-      if (isPlayer) {
-        const headGeo = new THREE.SphereGeometry(0.4, 16, 16);
-        const headMat = new THREE.MeshLambertMaterial({ color: 0xffcc99 });
-        const head = new THREE.Mesh(headGeo, headMat);
-        head.position.set(0, 1.4, -0.3);
-        head.castShadow = true;
-        kartGroup.add(head);
-        
-        const hatGeo = new THREE.ConeGeometry(0.35, 0.5, 8);
-        const hatMat = new THREE.MeshLambertMaterial({ color: 0xff6600 });
-        const hat = new THREE.Mesh(hatGeo, hatMat);
-        hat.position.set(0, 1.9, -0.3);
-        kartGroup.add(hat);
-      }
-      
-      // Wheels
-      const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 16);
-      const wheelMat = new THREE.MeshLambertMaterial({ color: 0x1a1a1a });
-      const wheelPositions = [
-        [-1, 0.4, 1],
-        [1, 0.4, 1],
-        [-1, 0.4, -1],
-        [1, 0.4, -1]
-      ];
-      
-      kartGroup.wheels = [];
-      wheelPositions.forEach(pos => {
-        const wheel = new THREE.Mesh(wheelGeo, wheelMat);
-        wheel.rotation.z = Math.PI / 2;
-        wheel.position.set(...pos);
-        wheel.castShadow = true;
-        kartGroup.add(wheel);
-        kartGroup.wheels.push(wheel);
-      });
-      
-      // Exhaust pipes
-      const exhaustGeo = new THREE.CylinderGeometry(0.1, 0.15, 0.5, 8);
-      const exhaustMat = new THREE.MeshLambertMaterial({ color: 0x888888 });
-      const exhaust1 = new THREE.Mesh(exhaustGeo, exhaustMat);
-      exhaust1.position.set(-0.5, 0.6, 1.5);
-      exhaust1.rotation.x = Math.PI / 6;
-      kartGroup.add(exhaust1);
-      
-      const exhaust2 = new THREE.Mesh(exhaustGeo, exhaustMat);
-      exhaust2.position.set(0.5, 0.6, 1.5);
-      exhaust2.rotation.x = Math.PI / 6;
-      kartGroup.add(exhaust2);
-      
-      return kartGroup;
-    }
-    
-    // Player kart
-    const playerKart = createKart(0xff6600, true);
-    playerKart.position.copy(trackWaypoints[0]);
-    playerKart.position.x -= 5;
-    playerKart.position.y = 0.1;
-    playerKart.rotation.y = Math.PI / 2;
-    scene.add(playerKart);
-    
-    // AI karts
-    const aiKarts = [];
-    const aiColors = [0x3498db, 0xe74c3c, 0x2ecc71, 0x9b59b6, 0xf1c40f, 0x1abc9c, 0xe91e63];
-    
-    for (let i = 0; i < 7; i++) {
-      const aiKart = createKart(aiColors[i]);
-      const startOffset = Math.floor((i + 1) / 2) * 4;
-      const side = i % 2 === 0 ? -1 : 1;
-      
-      aiKart.position.copy(trackWaypoints[0]);
-      aiKart.position.x += startOffset * side;
-      aiKart.position.z += side * 3;
-      aiKart.position.y = 0.1;
-      aiKart.rotation.y = Math.PI / 2;
-      
-      aiKart.targetWaypoint = 0;
-      aiKart.speed = 0;
-      aiKart.lap = 1;
-      aiKart.checkpoint = 0;
-      aiKart.baseSpeed = 0.7 + Math.random() * 0.3;
-      aiKart.skillVariance = Math.random() * 0.1;
-      
-      scene.add(aiKart);
-      aiKarts.push(aiKart);
-    }
-    
-    // Particle systems
-    const particles = {
-      exhaust: [],
-      drift: []
-    };
-    
-    // Exhaust particles
-    const exhaustParticleCount = 50;
-    const exhaustGeo = new THREE.SphereGeometry(0.08, 4, 4);
-    const exhaustMat = new THREE.MeshBasicMaterial({ color: 0x888888, transparent: true });
-    
-    for (let i = 0; i < exhaustParticleCount; i++) {
-      const particle = new THREE.Mesh(exhaustGeo, exhaustMat.clone());
-      particle.visible = false;
-      particle.velocity = new THREE.Vector3();
-      particle.life = 0;
-      scene.add(particle);
-      particles.exhaust.push(particle);
-    }
-    
-    // Drift particles
-    const driftParticleCount = 30;
-    const driftGeo = new THREE.SphereGeometry(0.15, 4, 4);
-    const driftColors = [0xff6600, 0xffcc00, 0xff3300];
-    
-    for (let i = 0; i < driftParticleCount; i++) {
-      const mat = new THREE.MeshBasicMaterial({ 
-        color: driftColors[i % driftColors.length], 
-        transparent: true 
-      });
-      const particle = new THREE.Mesh(driftGeo, mat);
-      particle.visible = false;
-      particle.velocity = new THREE.Vector3();
-      particle.life = 0;
-      scene.add(particle);
-      particles.drift.push(particle);
-    }
-    
-    // Spawn exhaust particle
-    let exhaustIndex = 0;
-    function spawnExhaustParticle(position, velocity) {
-      const particle = particles.exhaust[exhaustIndex];
-      particle.position.copy(position);
-      particle.velocity.copy(velocity);
-      particle.life = 1;
-      particle.visible = true;
-      particle.scale.setScalar(1);
-      exhaustIndex = (exhaustIndex + 1) % exhaustParticleCount;
-    }
-    
-    // Spawn drift particle
-    let driftIndex = 0;
-    function spawnDriftParticle(position) {
-      const particle = particles.drift[driftIndex];
-      particle.position.copy(position);
-      particle.velocity.set(
-        (Math.random() - 0.5) * 0.2,
-        Math.random() * 0.1,
-        (Math.random() - 0.5) * 0.2
-      );
-      particle.life = 1;
-      particle.visible = true;
-      particle.scale.setScalar(1);
-      driftIndex = (driftIndex + 1) % driftParticleCount;
-    }
-    
-    // Build environment
-    createTrack();
-    createHouses();
-    createTrees();
-    
-    // Start/Finish line
-    const finishGeo = new THREE.BoxGeometry(20, 0.1, 2);
-    const finishMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const finishLine = new THREE.Mesh(finishGeo, finishMat);
-    finishLine.position.copy(trackWaypoints[0]);
-    finishLine.position.y = 0.05;
-    scene.add(finishLine);
+    // Start/finish line
+    const startGeo = new THREE.PlaneGeometry(trackWidth, 3);
+    const startMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const startLine = new THREE.Mesh(startGeo, startMat);
+    startLine.rotation.x = -Math.PI / 2;
+    startLine.position.set(trackPoints[0].x, 0.07, trackPoints[0].z);
+    scene.add(startLine);
     
     // Checkered pattern
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 12; i++) {
       for (let j = 0; j < 2; j++) {
         if ((i + j) % 2 === 0) {
-          const checkGeo = new THREE.BoxGeometry(2, 0.12, 1);
+          const checkGeo = new THREE.PlaneGeometry(2, 1.5);
           const checkMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
           const check = new THREE.Mesh(checkGeo, checkMat);
-          check.position.set(
-            trackWaypoints[0].x - 9 + i * 2,
-            0.06,
-            trackWaypoints[0].z - 0.5 + j
-          );
+          check.rotation.x = -Math.PI / 2;
+          check.position.set(trackPoints[0].x - 11 + i * 2, 0.08, trackPoints[0].z - 0.75 + j * 1.5);
           scene.add(check);
         }
       }
     }
     
-    // Minimap
-    const minimapCanvas = document.getElementById('minimap-canvas');
-    minimapCanvas.width = 150;
-    minimapCanvas.height = 150;
-    const minimapCtx = minimapCanvas.getContext('2d');
-    
-    function drawMinimap() {
-      minimapCtx.fillStyle = 'rgba(0,0,0,0.5)';
-      minimapCtx.fillRect(0, 0, 150, 150);
+    // Kart creation
+    function createKart(color, isPlayer = false) {
+      const group = new THREE.Group();
       
-      // Draw track
-      minimapCtx.strokeStyle = '#555';
-      minimapCtx.lineWidth = 4;
-      minimapCtx.beginPath();
-      trackWaypoints.forEach((wp, i) => {
-        const x = 75 + wp.x * 0.4;
-        const y = 75 + wp.z * 0.4;
-        if (i === 0) minimapCtx.moveTo(x, y);
-        else minimapCtx.lineTo(x, y);
+      // Body
+      const bodyGeo = new THREE.BoxGeometry(1.8, 0.5, 2.8);
+      const bodyMat = new THREE.MeshLambertMaterial({ color });
+      const body = new THREE.Mesh(bodyGeo, bodyMat);
+      body.position.y = 0.4;
+      body.castShadow = true;
+      group.add(body);
+      
+      // Top
+      const topGeo = new THREE.BoxGeometry(1.2, 0.4, 1);
+      const topMat = new THREE.MeshLambertMaterial({ color: isPlayer ? 0xffaa00 : 0x222222 });
+      const top = new THREE.Mesh(topGeo, topMat);
+      top.position.set(0, 0.75, -0.2);
+      top.castShadow = true;
+      group.add(top);
+      
+      // Wheels
+      const wheelGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.25, 12);
+      const wheelMat = new THREE.MeshLambertMaterial({ color: 0x111111 });
+      const wheelPos = [[-0.9, 0.35, 0.9], [0.9, 0.35, 0.9], [-0.9, 0.35, -0.9], [0.9, 0.35, -0.9]];
+      
+      group.wheels = [];
+      wheelPos.forEach(p => {
+        const wheel = new THREE.Mesh(wheelGeo, wheelMat);
+        wheel.rotation.z = Math.PI / 2;
+        wheel.position.set(...p);
+        group.add(wheel);
+        group.wheels.push(wheel);
       });
-      minimapCtx.closePath();
-      minimapCtx.stroke();
       
-      // Draw AI karts
-      aiKarts.forEach((kart, i) => {
-        minimapCtx.fillStyle = '#' + aiColors[i].toString(16).padStart(6, '0');
-        minimapCtx.beginPath();
-        minimapCtx.arc(75 + kart.position.x * 0.4, 75 + kart.position.z * 0.4, 4, 0, Math.PI * 2);
-        minimapCtx.fill();
-      });
-      
-      // Draw player
-      minimapCtx.fillStyle = '#ff6600';
-      minimapCtx.beginPath();
-      minimapCtx.arc(75 + playerKart.position.x * 0.4, 75 + playerKart.position.z * 0.4, 5, 0, Math.PI * 2);
-      minimapCtx.fill();
+      return group;
     }
     
-    // Calculate positions
-    function calculatePositions() {
-      const allKarts = [
-        { kart: playerKart, lap: state.playerLap, checkpoint: state.playerCheckpoint, pos: playerKart.position, isPlayer: true }
+    // Player
+    const player = createKart(0xff4444, true);
+    player.position.set(trackPoints[0].x + 5, 0.1, trackPoints[0].z - 4);
+    player.rotation.y = -Math.PI / 2;
+    scene.add(player);
+    
+    // AI
+    const aiKarts = [];
+    const aiColors = [0x4488ff, 0x44ff44, 0xffff44, 0xff44ff, 0x44ffff, 0xff8844, 0x88ff44];
+    
+    for (let i = 0; i < 7; i++) {
+      const kart = createKart(aiColors[i]);
+      const row = Math.floor((i + 1) / 2);
+      const side = i % 2 === 0 ? -1 : 1;
+      
+      kart.position.set(
+        trackPoints[0].x + 5 + row * 5,
+        0.1,
+        trackPoints[0].z + side * 4
+      );
+      kart.rotation.y = -Math.PI / 2;
+      kart.targetIdx = 0;
+      kart.speed = 0;
+      kart.lap = 1;
+      kart.checkpoint = 0;
+      kart.baseSpeed = 0.5 + Math.random() * 0.2;
+      kart.skillOffset = Math.random() * Math.PI * 2;
+      scene.add(kart);
+      aiKarts.push(kart);
+    }
+    
+    // Particles for drift
+    const particles = [];
+    const particleGeo = new THREE.SphereGeometry(0.2, 6, 6);
+    const particleMat = new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true });
+    
+    for (let i = 0; i < 40; i++) {
+      const p = new THREE.Mesh(particleGeo, particleMat.clone());
+      p.visible = false;
+      p.life = 0;
+      scene.add(p);
+      particles.push(p);
+    }
+    
+    let particleIdx = 0;
+    
+    function spawnParticle(pos) {
+      const p = particles[particleIdx];
+      p.position.copy(pos);
+      p.position.y = 0.3;
+      p.life = 1;
+      p.visible = true;
+      p.scale.setScalar(1);
+      particleIdx = (particleIdx + 1) % particles.length;
+    }
+    
+    // Minimap
+    const minimapCanvas = document.getElementById('minimap-canvas');
+    minimapCanvas.width = 160;
+    minimapCanvas.height = 160;
+    const ctx = minimapCanvas.getContext('2d');
+    
+    function drawMinimap() {
+      ctx.fillStyle = 'rgba(0,0,0,0.7)';
+      ctx.fillRect(0, 0, 160, 160);
+      
+      ctx.strokeStyle = '#555';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      trackPoints.forEach((p, i) => {
+        const x = 80 + p.x * 0.4;
+        const y = 80 + p.z * 0.4;
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      });
+      ctx.closePath();
+      ctx.stroke();
+      
+      aiKarts.forEach(kart => {
+        ctx.fillStyle = '#' + aiColors[aiKarts.indexOf(kart)].toString(16).padStart(6, '0');
+        ctx.beginPath();
+        ctx.arc(80 + kart.position.x * 0.4, 80 + kart.position.z * 0.4, 5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      
+      ctx.fillStyle = '#ff4444';
+      ctx.beginPath();
+      ctx.arc(80 + player.position.x * 0.4, 80 + player.position.z * 0.4, 6, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    
+    // Get next waypoint index
+    function getNextWaypoint(pos, currentIdx) {
+      const nextIdx = (currentIdx + 1) % trackPoints.length;
+      const next = trackPoints[nextIdx];
+      
+      if (pos.distanceTo(next) < 25) {
+        return nextIdx;
+      }
+      return currentIdx;
+    }
+    
+    // Position calculation
+    function getProgress(kart, checkpoint, lap) {
+      return lap * 1000 + checkpoint * 10 - kart.position.distanceTo(trackPoints[(checkpoint + 1) % trackPoints.length]);
+    }
+    
+    function calculatePosition() {
+      const all = [
+        { isPlayer: true, lap: state.lap, checkpoint: state.checkpoint, pos: player.position }
       ];
       
       aiKarts.forEach(kart => {
-        allKarts.push({
-          kart,
-          lap: kart.lap,
-          checkpoint: kart.checkpoint,
-          pos: kart.position,
-          isPlayer: false
-        });
+        all.push({ isPlayer: false, lap: kart.lap, checkpoint: kart.checkpoint, pos: kart.position, kart });
       });
       
-      // Sort by lap, then checkpoint progress
-      allKarts.sort((a, b) => {
+      all.sort((a, b) => {
         if (b.lap !== a.lap) return b.lap - a.lap;
-        
-        // Distance to next checkpoint
-        const aWP = trackWaypoints[a.checkpoint];
-        const bWP = trackWaypoints[b.checkpoint];
-        const aDist = a.pos.distanceTo(aWP);
-        const bDist = b.pos.distanceTo(bWP);
-        
-        if (a.checkpoint !== b.checkpoint) return b.checkpoint - a.checkpoint;
-        return aDist - bDist;
+        if (b.checkpoint !== a.checkpoint) return b.checkpoint - a.checkpoint;
+        return getProgress(a.pos, a.checkpoint, a.lap) - getProgress(b.pos, b.checkpoint, b.lap);
       });
       
-      const playerPos = allKarts.findIndex(k => k.isPlayer) + 1;
-      return playerPos;
+      return all.findIndex(k => k.isPlayer) + 1;
     }
     
-    // UI update
+    // Update UI
     function updateUI() {
-      const pos = calculatePositions();
+      const pos = calculatePosition();
       const suffix = pos === 1 ? 'st' : pos === 2 ? 'nd' : pos === 3 ? 'rd' : 'th';
       document.getElementById('position').innerHTML = `${pos}<span>${suffix}</span>`;
-      document.getElementById('lap').textContent = `Lap ${state.playerLap} / 3`;
+      document.getElementById('lap').textContent = `Lap ${state.lap} / 3`;
       
-      const speedKmh = Math.round(state.playerSpeed * 150);
-      document.getElementById('speed-value').innerHTML = `${speedKmh}<span> km/h</span>`;
-      document.getElementById('speed-fill').style.width = `${(state.playerSpeed / state.maxSpeed) * 100}%`;
+      const kmh = Math.round(state.speed * 180);
+      document.getElementById('speed-value').innerHTML = `${kmh}<span> km/h</span>`;
     }
     
-    // Check checkpoint
-    function checkCheckpoint(position, currentCheckpoint) {
-      const nextCheckpoint = (currentCheckpoint + 1) % trackWaypoints.length;
-      const wp = trackWaypoints[nextCheckpoint];
-      
-      if (position.distanceTo(wp) < 20) {
-        return { passed: true, newCheckpoint: nextCheckpoint };
-      }
-      return { passed: false, newCheckpoint: currentCheckpoint };
-    }
-    
-    // Game logic
-    function updatePlayer(delta) {
+    // Update player
+    function updatePlayer(dt) {
       if (!state.started || state.finished) return;
       
       // Acceleration
-      if (keys.w || keys.up) {
-        const maxSpd = state.isDrifting ? state.maxSpeed * state.driftMultiplier : state.maxSpeed;
-        state.playerSpeed = Math.min(state.playerSpeed + state.acceleration, maxSpd);
-      } else if (keys.s || keys.down) {
-        state.playerSpeed = Math.max(state.playerSpeed - state.acceleration * 2, -0.3);
+      if (keys.w) {
+        const max = state.drifting ? state.maxSpeed * 1.4 : state.maxSpeed;
+        state.speed = Math.min(state.speed + state.accel, max);
+      } else if (keys.s) {
+        state.speed = Math.max(state.speed - state.accel * 2, -0.3);
       } else {
-        state.playerSpeed *= (1 - state.friction);
-        if (Math.abs(state.playerSpeed) < 0.01) state.playerSpeed = 0;
+        state.speed *= (1 - state.friction);
+        if (Math.abs(state.speed) < 0.01) state.speed = 0;
       }
       
       // Steering
-      const turnRate = state.turnSpeed * (state.playerSpeed / state.maxSpeed);
-      if (keys.a || keys.left) {
-        playerKart.rotation.y += turnRate;
-      }
-      if (keys.d || keys.right) {
-        playerKart.rotation.y -= turnRate;
-      }
+      const turn = state.turnSpeed * Math.min(state.speed / state.maxSpeed, 1);
+      if (keys.a) player.rotation.y += turn;
+      if (keys.d) player.rotation.y -= turn;
       
-      // Drifting
-      state.isDrifting = keys.space && Math.abs(state.playerSpeed) > 0.5;
+      // Drift
+      state.drifting = keys.space && state.speed > 0.4;
       
-      // Movement
-      const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(playerKart.quaternion);
-      playerKart.position.addScaledVector(forward, state.playerSpeed);
+      // Move
+      const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(player.quaternion);
+      player.position.addScaledVector(fwd, state.speed);
       
-      // Wheel rotation
-      playerKart.wheels.forEach(wheel => {
-        wheel.rotation.x += state.playerSpeed * 0.3;
-      });
-      
-      // Exhaust particles
-      if (state.playerSpeed > 0.3 && Math.random() > 0.5) {
-        const exhaustOffset1 = new THREE.Vector3(-0.5, 0.6, 1.5).applyQuaternion(playerKart.quaternion);
-        const exhaustOffset2 = new THREE.Vector3(0.5, 0.6, 1.5).applyQuaternion(playerKart.quaternion);
-        
-        spawnExhaustParticle(
-          playerKart.position.clone().add(exhaustOffset1),
-          forward.clone().multiplyScalar(-0.1)
-        );
-        spawnExhaustParticle(
-          playerKart.position.clone().add(exhaustOffset2),
-          forward.clone().multiplyScalar(-0.1)
-        );
-      }
+      // Wheels
+      player.wheels.forEach(w => w.rotation.x += state.speed * 0.4);
       
       // Drift particles
-      if (state.isDrifting && Math.random() > 0.3) {
-        const driftPos = playerKart.position.clone();
-        driftPos.y = 0.3;
-        driftPos.x += (Math.random() - 0.5) * 2;
-        driftPos.z += (Math.random() - 0.5) * 2;
-        spawnDriftParticle(driftPos);
+      if (state.drifting && Math.random() > 0.4) {
+        spawnParticle(player.position);
       }
       
-      // Check checkpoints
-      const check = checkCheckpoint(playerKart.position, state.playerCheckpoint);
-      if (check.passed) {
-        state.playerCheckpoint = check.newCheckpoint;
+      // Check waypoint
+      const newCP = getNextWaypoint(player.position, state.checkpoint);
+      if (newCP !== state.checkpoint) {
+        state.checkpoint = newCP;
         
-        // Check lap completion
-        if (state.playerCheckpoint === 0) {
-          state.playerLap++;
-          if (state.playerLap > 3) {
+        // Lap complete
+        if (state.checkpoint === 0) {
+          state.lap++;
+          if (state.lap > 3) {
             state.finished = true;
-            showEndScreen();
+            showEnd();
           }
         }
       }
     }
     
-    function updateAI(delta) {
+    // Update AI
+    function updateAI(dt) {
       if (!state.started || state.finished) return;
       
       aiKarts.forEach(kart => {
-        // Get target waypoint
-        const target = trackWaypoints[kart.targetWaypoint];
+        // Target waypoint
+        const target = trackPoints[kart.targetIdx];
         const toTarget = new THREE.Vector3().subVectors(target, kart.position);
-        const distance = toTarget.length();
         
-        // Steer towards target
+        // Aim at next waypoint
         const targetAngle = Math.atan2(toTarget.x, toTarget.z);
         let angleDiff = targetAngle - kart.rotation.y;
         
+        // Normalize angle
         while (angleDiff > Math.PI) angleDiff -= Math.PI * 2;
         while (angleDiff < -Math.PI) angleDiff += Math.PI * 2;
         
-        kart.rotation.y += Math.sign(angleDiff) * Math.min(Math.abs(angleDiff), 0.05);
-        
-        // Speed control
-        const targetSpeed = kart.baseSpeed + Math.sin(Date.now() * 0.001 + kart.skillVariance * 100) * kart.skillVariance;
-        kart.speed += (targetSpeed - kart.speed) * 0.05;
-        
-        // Move
-        const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(kart.quaternion);
-        kart.position.addScaledVector(forward, kart.speed);
-        
-        // Wheel rotation
-        if (kart.wheels) {
-          kart.wheels.forEach(wheel => {
-            wheel.rotation.x += kart.speed * 0.3;
-          });
+        // Steer
+        const steerSpeed = 0.06;
+        if (angleDiff > 0.05) {
+          kart.rotation.y += Math.min(angleDiff, steerSpeed);
+        } else if (angleDiff < -0.05) {
+          kart.rotation.y += Math.max(angleDiff, -steerSpeed);
         }
         
+        // Speed variation
+        const speedVar = Math.sin(Date.now() * 0.002 + kart.skillOffset) * 0.08;
+        const targetSpeed = kart.baseSpeed + speedVar;
+        kart.speed += (targetSpeed - kart.speed) * 0.05;
+        
+        // Move forward
+        const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(kart.quaternion);
+        kart.position.addScaledVector(fwd, kart.speed);
+        
+        // Wheels
+        kart.wheels.forEach(w => w.rotation.x += kart.speed * 0.4);
+        
         // Check if reached waypoint
-        if (distance < 15) {
-          kart.targetWaypoint = (kart.targetWaypoint + 1) % trackWaypoints.length;
+        if (toTarget.length() < 18) {
+          kart.targetIdx = (kart.targetIdx + 1) % trackPoints.length;
+          kart.checkpoint = kart.targetIdx;
           
-          // Check lap
-          if (kart.targetWaypoint === 0) {
+          // Lap
+          if (kart.targetIdx === 0) {
             kart.lap++;
           }
         }
-        
-        // Update checkpoint for position calculation
-        kart.checkpoint = kart.targetWaypoint;
       });
     }
     
-    function updateParticles(delta) {
-      particles.exhaust.forEach(p => {
+    // Update particles
+    function updateParticles(dt) {
+      particles.forEach(p => {
         if (p.life > 0) {
-          p.life -= delta * 2;
-          p.position.add(p.velocity);
-          p.velocity.y += 0.01;
-          p.scale.setScalar(p.life);
-          p.material.opacity = p.life;
-          if (p.life <= 0) p.visible = false;
-        }
-      });
-      
-      particles.drift.forEach(p => {
-        if (p.life > 0) {
-          p.life -= delta * 1.5;
-          p.position.add(p.velocity);
+          p.life -= dt * 2;
+          p.position.y += 0.05;
           p.scale.setScalar(p.life * 1.5);
           p.material.opacity = p.life;
           if (p.life <= 0) p.visible = false;
@@ -929,26 +629,23 @@
       });
     }
     
+    // Camera
     function updateCamera() {
-      const cameraOffset = new THREE.Vector3(0, 8, 15);
-      cameraOffset.applyQuaternion(playerKart.quaternion);
+      const offset = new THREE.Vector3(0, 7, 12);
+      offset.applyQuaternion(player.quaternion);
       
-      const targetPos = playerKart.position.clone().add(cameraOffset);
+      const targetPos = player.position.clone().add(offset);
       camera.position.lerp(targetPos, 0.08);
       
-      const lookTarget = playerKart.position.clone();
-      lookTarget.y += 2;
-      camera.lookAt(lookTarget);
+      const look = player.position.clone();
+      look.y += 1;
+      camera.lookAt(look);
     }
     
-    // Start game
-    function startCountdown() {
-      document.getElementById('start-screen').style.opacity = '0';
-      setTimeout(() => {
-        document.getElementById('start-screen').style.display = 'none';
-      }, 500);
+    // Start
+    document.getElementById('start-btn').onclick = () => {
+      document.getElementById('start-screen').style.display = 'none';
       
-      state.countdown = true;
       const countdownEl = document.getElementById('countdown');
       countdownEl.style.display = 'block';
       
@@ -961,45 +658,43 @@
           countdownEl.textContent = count;
         } else if (count === 0) {
           countdownEl.textContent = 'GO!';
-          countdownEl.style.color = '#00ff00';
+          countdownEl.style.color = '#44ff44';
         } else {
           clearInterval(interval);
           countdownEl.style.display = 'none';
-          state.countdown = false;
           state.started = true;
         }
       }, 1000);
-    }
+    };
     
-    function showEndScreen() {
-      const pos = calculatePositions();
+    function showEnd() {
+      const pos = calculatePosition();
       const suffix = pos === 1 ? 'st' : pos === 2 ? 'nd' : pos === 3 ? 'rd' : 'th';
       
-      document.getElementById('end-title').textContent = pos === 1 ? 'Victory!' : 'Race Complete!';
-      document.getElementById('results').textContent = `You finished in ${pos}${suffix} place!`;
+      document.getElementById('end-title').textContent = pos === 1 ? 'VICTORY!' : 'FINISH!';
+      document.getElementById('results').textContent = `You finished ${pos}${suffix}!`;
       document.getElementById('end-screen').style.display = 'flex';
     }
     
-    // Event listeners
-    document.getElementById('start-btn').addEventListener('click', startCountdown);
-    document.getElementById('restart-btn').addEventListener('click', () => location.reload());
+    document.getElementById('restart-btn').onclick = () => location.reload();
     
+    // Input
     document.addEventListener('keydown', e => {
-      const key = e.key.toLowerCase();
-      if (key === 'w' || key === 'arrowup') keys.w = true;
-      if (key === 's' || key === 'arrowdown') keys.s = true;
-      if (key === 'a' || key === 'arrowleft') keys.a = true;
-      if (key === 'd' || key === 'arrowright') keys.d = true;
-      if (key === ' ') keys.space = true;
+      const k = e.key.toLowerCase();
+      if (k === 'w' || k === 'arrowup') keys.w = true;
+      if (k === 's' || k === 'arrowdown') keys.s = true;
+      if (k === 'a' || k === 'arrowleft') keys.a = true;
+      if (k === 'd' || k === 'arrowright') keys.d = true;
+      if (k === ' ') keys.space = true;
     });
     
     document.addEventListener('keyup', e => {
-      const key = e.key.toLowerCase();
-      if (key === 'w' || key === 'arrowup') keys.w = false;
-      if (key === 's' || key === 'arrowdown') keys.s = false;
-      if (key === 'a' || key === 'arrowleft') keys.a = false;
-      if (key === 'd' || key === 'arrowright') keys.d = false;
-      if (key === ' ') keys.space = false;
+      const k = e.key.toLowerCase();
+      if (k === 'w' || k === 'arrowup') keys.w = false;
+      if (k === 's' || k === 'arrowdown') keys.s = false;
+      if (k === 'a' || k === 'arrowleft') keys.a = false;
+      if (k === 'd' || k === 'arrowright') keys.d = false;
+      if (k === ' ') keys.space = false;
     });
     
     window.addEventListener('resize', () => {
@@ -1008,17 +703,17 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
     
-    // Animation loop
+    // Loop
     const clock = new THREE.Clock();
     
     function animate() {
       requestAnimationFrame(animate);
       
-      const delta = clock.getDelta();
+      const dt = clock.getDelta();
       
-      updatePlayer(delta);
-      updateAI(delta);
-      updateParticles(delta);
+      updatePlayer(dt);
+      updateAI(dt);
+      updateParticles(dt);
       updateCamera();
       updateUI();
       drawMinimap();
